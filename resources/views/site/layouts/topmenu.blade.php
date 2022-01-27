@@ -37,7 +37,7 @@
 			</form>
 		</div>
 		<div class="col-md-3 header-right footer-bottom">
-			<ul>
+			{{-- <ul>
 				<li><a href="#" class="use1" data-toggle="modal" data-target="#myModal4"><span>Login</span></a>
 					
 				</li>
@@ -45,7 +45,16 @@
 				<li><a class="twi" href="#"></a></li>
 				<li><a class="insta" href="#"></a></li>
 				<li><a class="you" href="#"></a></li>
-			</ul>
+			</ul> --}}
+			@auth
+				{{ Auth::user()->name }}
+				<form action="{{ url('/logout') }}" method="POST">
+				    @csrf
+				    <button type="submit" class="nav-link">
+				        LogOut
+				    </button>
+				</form>
+			@endauth
 		</div>
 		<div class="clearfix"></div>
 	</div>
