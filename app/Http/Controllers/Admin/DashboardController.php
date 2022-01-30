@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\MainCategory;
 use App\Http\Controllers\Controller;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -82,5 +84,13 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function dummy()
+    {
+        $xp = new EnumValue(MainCategory::class);
+        //var_dump($xp->rule);
+        var_dump(new EnumValue(MainCategory::class));
+        print_r(new EnumValue(MainCategory::class));
     }
 }

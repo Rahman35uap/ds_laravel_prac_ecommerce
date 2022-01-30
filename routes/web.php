@@ -19,15 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('site.home');
 });
+Route::get('/dummy', [DashboardController::class, 'dummy']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-Route::prefix('/admin')->middleware(['auth',OnlyAdmin::class])->group(function(){
-    Route::get('/dashboard',[DashboardController::class,'index']);
-    Route::resource('/categories',CategoryController::class);
+Route::prefix('/admin')->middleware(['auth', OnlyAdmin::class])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::resource('/categories', CategoryController::class);
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
