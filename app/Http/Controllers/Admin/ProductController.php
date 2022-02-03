@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\MainCategory;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +15,6 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $data['main_category_details'] = MainCategory::asSelectArray();
-        
-        $category = new Category();
-        $data['db_category_table'] = $category->get();
-        return view('admin.categories.index',$data);
     }
 
     /**
@@ -33,8 +25,6 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        $data["main_category"] = MainCategory::asSelectArray();
-        return view('admin.categories.create',$data);
     }
 
     /**
@@ -43,15 +33,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
         //
-        $category = new Category();
-        $category->name = $request->name;
-        $category->main_category_id = $request->main_category_id;
-        $category->save();
-        flash('Successfully created')->success(); // showing success message to the redirected page. This is using session() function inside.
-        return redirect('/admin/categories');
     }
 
     /**
@@ -97,17 +81,5 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $category = Category::find($id);
-        if($category)
-        {
-            $category->delete();
-            flash("Successfully deleted")->success();
-        }
-        else
-        {
-            flash("No Items Found")->error();
-        }
-        
-        return redirect("/admin/categories/");
     }
 }

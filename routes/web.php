@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Middleware\OnlyAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('site.home');
 });
-Route::get('/dummy', [DashboardController::class, 'dummy']);
+Route::get('/dummy/{id1}/{id2}/{id3}', [DashboardController::class, 'dummy']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -28,6 +29,7 @@ Route::get('/dummy', [DashboardController::class, 'dummy']);
 Route::prefix('/admin')->middleware(['auth', OnlyAdmin::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/products', ProductController::class);
 });
 
 

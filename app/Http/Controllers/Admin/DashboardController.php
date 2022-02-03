@@ -86,8 +86,9 @@ class DashboardController extends Controller
         //
     }
     
-    public function dummy()
+    public function dummy($id1,$id2,$id3)
     {
+        echo $id1." ".$id2." ".$id3;
         $xp = new EnumValue(MainCategory::class);
         //var_dump($xp->rule);
         var_dump(new EnumValue(MainCategory::class));

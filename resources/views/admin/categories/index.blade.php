@@ -28,8 +28,28 @@
         </div>
     </div>
     <div class="card-body">
-        <table>
-
+        <a href="#"> content</a>
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Under_Main_Category</th>
+                <th>Action</th>
+            </tr>
+            @foreach ($db_category_table as $item)
+                <tr>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $main_category_details[$item->main_category_id] }}</td>
+                    <td>
+                        <a href="route(categories.edit)" class="btn btn-info">Edit</a>
+                        <form action="{{ url("/admin/categories/$item->id") }}" method="POST" style="display: inline"
+                            onsubmit="return confirm('Are you sure to delete?')">
+                            @csrf
+                            @method("delete")
+                            <input type="submit" class="btn btn-info" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
         </table>
     </div>
     <!-- /.card-body -->

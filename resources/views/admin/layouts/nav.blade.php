@@ -33,9 +33,15 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="{{ asset("/admin/iframe.html")}}" class="nav-link">
+            <a href="{{ asset("/admin/categories")}}" class="nav-link" {{ request()->is('*/categories') ? "active":"" }}>
                 <i class="nav-icon fas fa-ellipsis-h"></i>
-                <p>Tabbed IFrame Plugin</p>
+                <p>Categories</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ asset("/admin/products")}}" class="nav-link" {{ request()->is('*/products') ? "active":"" }}>
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Products</p>
             </a>
         </li>
         

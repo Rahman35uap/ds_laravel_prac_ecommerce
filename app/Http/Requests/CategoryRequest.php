@@ -27,7 +27,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             //
-            'main_category_id' => 'required',      // i.e. main_category_id can't be null and can't be such a value which is not in the MainCategory enum type
+            'main_category_id' => ['required',new EnumValue(MainCategory::class,false)],      // i.e. main_category_id can't be null and can't be such a value which is not in the MainCategory enum type
             'name' => 'required'
         ];
     }
