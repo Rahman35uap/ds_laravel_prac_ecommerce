@@ -74,6 +74,18 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
+        $category = Category::find($id);
+        if($category)
+        {
+            $data['db_category_table'] = $category;
+            $data['main_category'] = MainCategory::asSelectArray();
+            return view('admin.categories.edit',$data);
+        }
+        else
+        {
+            flash("No such a category exists to edit")->error();
+        }
+        return redirect('/admin/categories');
     }
 
     /**
@@ -83,9 +95,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         //
+        $category = Category::find($id);
+        if($category)
+        {
+            $category->name = $request->name;
+            $category->main_category_id = $request->main_category_id;
+            $category->save();
+            flash("Successfully Edited");
+        }
+        else
+        {
+            flash("No such an item exists to edit")->error();
+        }
+        return redirect('/admin/categories');
     }
 
     /**

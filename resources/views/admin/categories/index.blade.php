@@ -28,7 +28,6 @@
         </div>
     </div>
     <div class="card-body">
-        <a href="#"> content</a>
         <table class="table table-bordered">
             <tr>
                 <th>Name</th>
@@ -40,7 +39,8 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $main_category_details[$item->main_category_id] }}</td>
                     <td>
-                        <a href="route(categories.edit)" class="btn btn-info">Edit</a>
+                        <a href="{{ route("categories.edit",$item->id) }}" class="btn btn-info">Edit</a>
+                        {{-- Here, route name [categories.edit] indicates to the url [/categories/{category}/edit] so the argument of {category} is passing --}}
                         <form action="{{ url("/admin/categories/$item->id") }}" method="POST" style="display: inline"
                             onsubmit="return confirm('Are you sure to delete?')">
                             @csrf
