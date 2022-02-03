@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->main_category_id = $request->main_category_id;
         $category->save();
-        flash('Successfully created')->success(); // showing success message to user
+        flash('Successfully created')->success(); // showing success message to the redirected page. This is using session() function inside.
         return redirect('/admin/categories');
     }
 
