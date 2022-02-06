@@ -5,11 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\MainCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Interfaces\ICategoryRepository;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepo;
+
+    public function __construct(ICategoryRepository $categoryRepo)          // injecting dependency
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +30,8 @@ class CategoryController extends Controller
         $data['main_category_details'] = MainCategory::asSelectArray();
         
         $category = new Category();
-        $data['db_category_table'] = $category->get();
+        // $data['db_category_table'] = $category->get();
+        $data['db_category_table'] = $this->categoryRepo->get();
         return view('admin.categories.index',$data);
     }
 
@@ -45,12 +55,15 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        //
-        $category = new Category();
-        $category->name = $request->name;
-        $category->main_category_id = $request->main_category_id;
-        $category->save();
-        flash('Successfully created')->success(); // showing success message to the redirected page. This is using session() function inside.
+        // /* using Data access logic here */
+        // $category = new Category();
+        // $category->name = $request->name;
+        // $category->main_category_id = $request->main_category_id;
+        // $category->save();
+        // flash('Successfully created')->success(); // showing success message to the redirected page. This is using session() function inside.
+        
+        /* using repository pattern */
+        $this->categoryRepo->createCategory($request);
         return redirect('/admin/categories');
     }
 
@@ -121,18 +134,19 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $category = Category::find($id);
-        if($category)
-        {
-            $category->delete();
-            flash("Successfully deleted")->success();
-        }
-        else
-        {
-            flash("No Items Found")->error();
-        }
-        
+        /* using Data access logic here */
+        // $category = Category::find($id);
+        // if($category)
+        // {
+        //     $category->delete();
+        //     flash("Successfully deleted")->success();
+        // }
+        // else
+        // {
+        //     flash("No Items Found")->error();
+        // }
+        /* using repository pattern */
+        $this->categoryRepo->delete($id);
         return redirect("/admin/categories/");
     }
 }
