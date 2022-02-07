@@ -28,11 +28,11 @@ class CategoryController extends Controller
     {
         //
         $data['main_category_details'] = MainCategory::asSelectArray();
-        
-        $category = new Category();
+
+        //$category = new Category();
         // $data['db_category_table'] = $category->get();
         $data['db_category_table'] = $this->categoryRepo->get();
-        return view('admin.categories.index',$data);
+        return view('admin.categories.index', $data);
     }
 
     /**
@@ -44,7 +44,7 @@ class CategoryController extends Controller
     {
         //
         $data["main_category"] = MainCategory::asSelectArray();
-        return view('admin.categories.create',$data);
+        return view('admin.categories.create', $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryController extends Controller
         // $category->main_category_id = $request->main_category_id;
         // $category->save();
         // flash('Successfully created')->success(); // showing success message to the redirected page. This is using session() function inside.
-        
+
         /* using repository pattern */
         $this->categoryRepo->createCategory($request);
         return redirect('/admin/categories');
@@ -87,18 +87,30 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
-        $category = Category::find($id);
-        if($category)
-        {
+        // $category = Category::find($id);
+        // if($category)
+        // {
+        //     $data['db_category_table'] = $category;
+        //     $data['main_category'] = MainCategory::asSelectArray();
+        //     return view('admin.categories.edit',$data);
+        // }
+        // else
+        // {
+        //     flash("No such a category exists to edit")->error();
+        // }
+        // return redirect('/admin/categories');
+
+        // using repository patern
+        $category = $this->categoryRepo->find($id);
+        if ($category) {
             $data['db_category_table'] = $category;
             $data['main_category'] = MainCategory::asSelectArray();
-            return view('admin.categories.edit',$data);
+            return view("admin.categories.edit", $data);
+        } else {
+            flash("No such a category extists to edit")->error();
+            return redirect("/admin/categories");
         }
-        else
-        {
-            flash("No such a category exists to edit")->error();
-        }
-        return redirect('/admin/categories');
+        
     }
 
     /**
@@ -110,14 +122,27 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        //
-        $category = Category::find($id);
+        //  using raw
+        // $category = Category::find($id);
+        // if($category)
+        // {
+        //     $category->name = $request->name;
+        //     $category->main_category_id = $request->main_category_id;
+        //     $category->save();
+        //     flash("Successfully Edited");
+        // }
+        // else
+        // {
+        //     flash("No such an item exists to edit")->error();
+        // }
+        // return redirect('/admin/categories');
+
+        // using repository pattern
+        //$this->categoryRepo->updateCategory($request, $id);
+        $category = $this->categoryRepo->find($id);
         if($category)
         {
-            $category->name = $request->name;
-            $category->main_category_id = $request->main_category_id;
-            $category->save();
-            flash("Successfully Edited");
+            $this->categoryRepo->updateCategory($request, $id);
         }
         else
         {

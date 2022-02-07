@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\ICategoryRepository;
+use App\Interfaces\IProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $productRepo;
+    protected $catRepo;
+
+    public function __construct(IProductRepository $productRepo,ICategoryRepository $catRepo)
+    {
+        $this->productRepo = $productRepo;
+        $this->catRepo = $catRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +26,8 @@ class ProductController extends Controller
     public function index()
     {
         //
+        return view('admin.products.index');
+
     }
 
     /**
@@ -25,6 +38,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('admin.products.create');
     }
 
     /**
